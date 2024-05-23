@@ -11,17 +11,17 @@ int main() {
     for (int i = 0; i < q; i++){
     int l = 0, r = n - 1, s, ind = -1;
     cin >> s;
-    while (l < r){
-        int m = l + r / 2;
+    while (l <= r){
+        int m = (l + r) / 2;
         if (v[m] == s){
             ind = m;
             break;
         }
         else if (v[m] > s){
-            r = m;
+            r = m - 1;
         }
         else {
-            l = m;
+            l = m + 1;
         }
     }
     cout << ind << endl;
