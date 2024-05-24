@@ -2,29 +2,31 @@
 
 #include <bits/stdc++.h> 
 using namespace std; 
-  
+#define MAX 200000
 int main() {
-    int n;
-    vector<stack<int>> t;
+    int n, size = 0;
+    long long int t[MAX], max = 0;
     cin >> n;
     for (int i = 0; i < n; i++){
-        int s, v = 0;
+        int s;
         cin >> s;
-        for (auto & stack : t){
-            if (stack.top() > s){
-                stack.emplace(s);
-                v = 1;
+        if (s >= max){
+            t[size] = s;
+            size++;
+        }
+        else{
+        for (int j = 0; j < size; j++){
+            if (t[j] > s){
+                if (t[j] = max){
+                    max = s;
+                }
+                t[j] = s;
                 break;
             }
         }
-
-        if (i == 0 || v == 0){
-            stack<int> st;
-            st.emplace(s);
-            t.push_back(st);
         }
-
+        
     }
-    cout << t.size() << endl;
+    cout << size << endl;
     return 0;
     }
