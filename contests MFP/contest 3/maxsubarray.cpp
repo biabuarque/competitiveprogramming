@@ -8,7 +8,7 @@ int main() {
     int n;
     long long int v[MAX];
     cin >> n;
-    int maxind = 0, max = INT_MIN;
+    long long int maxind = 0, max = -1000000000;
     for (int i = 0; i < n; i++){
         cin >> v[i];
         maxind += v[i];
