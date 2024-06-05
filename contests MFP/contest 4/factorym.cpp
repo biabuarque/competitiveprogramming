@@ -3,7 +3,10 @@ using namespace std;
 #define MAX 200000
   
 int main() { 
-    long long int i, n, t, max = 0;
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL);
+    cout.tie(NULL);
+    long long int i, n, t, max = 1;
     long long int v[MAX];
     cin >> n >> t;
     for (int j = 0; j < n; j++){
@@ -14,7 +17,7 @@ int main() {
     }
     long long int ini = 1, fim = max * t;
     while (ini < fim){
-        long long int mid = (ini + fim)/2, tot = 0;
+        long long int mid = (ini + fim)>>1, tot = 0;
         for (int j = 0; j < n; j++){
             tot += floor(mid / v[j]);
         }
