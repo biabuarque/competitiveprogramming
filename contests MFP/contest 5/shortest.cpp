@@ -1,42 +1,39 @@
 #include <bits/stdc++.h> 
 using namespace std; 
-int djikstra(long long int n, long long int m, long long int s, long long int t, vector<pair<long long int, long long int>> adj[], vector<long long int> &dist){
+
+void dijkstra(vector<vector<pair<int, long long int>>> &graph, vector<int> &dist, int start){
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, s});
-    dist[s] = 0;
+    pq.push({0, start});
+    dist[start] = 0;
     while (!pq.empty()){
         int u = pq.top().second;
         pq.pop();
-        for (auto x : adj[u]){
-            int v = x.first;
-            int w = x.second;
-            if (dist[v] > dist[u] + w){
-                dist[v] = dist[u] + w;
+        for (auto i : graph[u]){
+            int v = i.first;
+            long long int weight = i.second;
+            if (dist[v] > dist[u] + weight){
+                dist[v] = dist[u] + weight;
                 pq.push({dist[v], v});
             }
         }
     }
-    return dist[t];
 }
 
 int main() { 
-    long long int n, m;
+    int n, m;
     cin >> n >> m;
-    vector<long long int> dist(n + 1, INT_MAX);
-    vector<pair<long long int, long long int>> adj[n+1]; // assuming nodes are 1-indexed
-    for(long long int i = 0; i < m; i++) {
-        long long int a, b, c;
+    vector<vector<pair<int, int>>> graph(n + 1);
+    vector<int> dist(n, INT_MAX);
+    for (int i = 0; i < m; i++){
+        int a, b, c;
         cin >> a >> b >> c;
-        adj[a].push_back({b, c});
-        // if the graph is undirected, add the following line:
-        // adj[b].push_back({a, c});
+        a--; b--;
+        graph[a].push_back({b, c});
     }
-    
-    for (long long int i = 1; i <= n; i++){
-        cout << djikstra(n, m, 1, i, adj, dist) << " ";
+    dijkstra(graph, dist, 0);
+    for (int i = 0; i < n; i++){
+        cout << dist[i] << " ";
     }
-
     cout << endl;
     return 0;
 }
-
