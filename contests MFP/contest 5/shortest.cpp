@@ -1,18 +1,27 @@
 #include <bits/stdc++.h> 
 using namespace std; 
 
-void dijkstra(vector<vector<pair<int, long long int>>> &graph, vector<int> &dist, int start){
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
-    pq.push({0, start});
+void dijkstra(vector<vector<pair<int, long long int>>>& graph, vector<long long int>& dist, int start) {
+    int n = graph.size();
     dist[start] = 0;
-    while (!pq.empty()){
+    priority_queue<pair<long long int, int>, vector<pair<long long int, int>>, greater<pair<long long int, int>>> pq;
+    pq.push({0, start});
+    
+    while (!pq.empty()) {
         int u = pq.top().second;
+        long long int d = pq.top().first;
         pq.pop();
-        for (auto i : graph[u]){
-            int v = i.first;
-            long long int weight = i.second;
-            if (dist[v] > dist[u] + weight){
-                dist[v] = dist[u] + weight;
+        
+        if (d > dist[u]) {
+            continue;
+        }
+        
+        for (auto edge : graph[u]) {
+            int v = edge.first;
+            long long int w = edge.second;
+            
+            if (d + w < dist[v]) {
+                dist[v] = d + w;
                 pq.push({dist[v], v});
             }
         }
@@ -22,10 +31,11 @@ void dijkstra(vector<vector<pair<int, long long int>>> &graph, vector<int> &dist
 int main() { 
     int n, m;
     cin >> n >> m;
-    vector<vector<pair<int, int>>> graph(n + 1);
-    vector<int> dist(n, INT_MAX);
+    vector<vector<pair<int, long long int>>> graph(n + 1);
+    vector<long long int> dist(n, LONG_LONG_MAX);
     for (int i = 0; i < m; i++){
-        int a, b, c;
+        int a, b;
+        long long int c;
         cin >> a >> b >> c;
         a--; b--;
         graph[a].push_back({b, c});

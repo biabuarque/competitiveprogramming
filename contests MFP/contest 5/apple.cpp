@@ -1,7 +1,7 @@
 #include <bits/stdc++.h> 
 using namespace std; 
 
-int solve(int i, long long int p[], long long int s1, long long int s2, int n){
+long long int solve(int i, long long int p[], long long int s1, long long int s2, int n){
     if (i == n){
         return abs(s1 - s2);
     }

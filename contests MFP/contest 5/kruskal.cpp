@@ -53,43 +53,49 @@ bool compareEdges(const Edge& a, const Edge& b) {
 }
 
 // Function to perform Kruskal's algorithm
-vector<Edge> kruskal(vector<Edge>& edges, int n) {
+vector<Edge> kruskal(vector<Edge>& edges, int V) {
     // Sort the edges in non-decreasing order of their weight
     sort(edges.begin(), edges.end(), compareEdges);
     
-    vector<Edge> mst; // Minimum Spanning Tree
+    vector<Edge> result;
+    DisjointSet ds(V);
     
-    DisjointSet ds(n);
-    
-    for (const Edge& edge : edges) {
-        int srcParent = ds.find(edge.src);
-        int destParent = ds.find(edge.dest);
+    for (const auto& edge : edges) {
+        int src = edge.src;
+        int dest = edge.dest;
         
-        // If including this edge doesn't form a cycle, add it to the MST
-        if (srcParent != destParent) {
-            mst.push_back(edge);
-            ds.unionSets(srcParent, destParent);
+        int srcRoot = ds.find(src);
+        int destRoot = ds.find(dest);
+        
+        // If including this edge does not form a cycle, add it to the result
+        if (srcRoot != destRoot) {
+            result.push_back(edge);
+            ds.unionSets(srcRoot, destRoot);
         }
     }
     
-    return mst;
+    return result;
 }
 
 int main() {
-    int n, m; // Number of vertices and edges
-    cin >> n >> m;
+    int V, E;
+    cout << "Enter the number of vertices: ";
+    cin >> V;
+    cout << "Enter the number of edges: ";
+    cin >> E;
     
-    vector<Edge> edges(m);
+    vector<Edge> edges(E);
     
-    for (int i = 0; i < m; i++) {
+    cout << "Enter the source, destination, and weight of each edge:\n";
+    for (int i = 0; i < E; i++) {
         cin >> edges[i].src >> edges[i].dest >> edges[i].weight;
     }
     
-    vector<Edge> mst = kruskal(edges, n);
+    vector<Edge> minimumSpanningTree = kruskal(edges, V);
     
-    cout << "Minimum Spanning Tree:" << endl;
-    for (const Edge& edge : mst) {
-        cout << edge.src << " - " << edge.dest << " : " << edge.weight << endl;
+    cout << "Minimum Spanning Tree:\n";
+    for (const auto& edge : minimumSpanningTree) {
+        cout << edge.src << " -- " << edge.dest << " : " << edge.weight << "\n";
     }
     
     return 0;
